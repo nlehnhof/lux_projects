@@ -2,7 +2,7 @@ using CSV, DataFrames, Statistics, Random, Lux, Optimisers, Zygote
 using MLUtils
 using Plots, Printf
 
-function main()
+# function main()
     # -------------------------
     # Load CSV Data
     # -------------------------
@@ -121,6 +121,9 @@ function main()
     plot!(nepoch, test_loss, label = "Test Loss")
     xlabel!("Epochs")
     ylabel!("Loss")
-end
 
-main()
+
+##############################################################
+# end
+
+# main()
