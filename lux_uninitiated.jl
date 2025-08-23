@@ -1,4 +1,4 @@
-using CSV, DataFrames, Statistics, Random, Lux, Optimisers, Zygote
+using CSV, DataFrames, Random, Statistics, Lux, Optimisers, Zygote
 using MLUtils
 using Plots, Printf
 
