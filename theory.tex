@@ -1,0 +1,134 @@
+\documentclass[conf]{new-aiaa} % Use [journal] for AIAA journal style
+
+\input{latex/preamble} % your preamble.tex file with packages
+
+\begin{document}
+\sloppy % helps reduce overfull hboxes
+
+\title{Notes on the Fast Multipole Method, Vortex Particle Method, and Neural Approximations}
+\author{Nathan Lehnhof}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+% ======================================================
+\section{Mathematical and Physical Foundations}
+
+\subsection{Vector Calculus Review}
+Divergence: $\nabla \cdot \mathbf{F}$ measures the net flow out of a point.  
+Gradient: $\nabla \phi$ gives the direction of steepest increase.  
+Curl: $\nabla \times \mathbf{F}$ represents local rotation.
+
+\subsection{Integral Theorems (Gauss, Stokes, Green)}
+Gauss's theorem links divergence to flux through a surface.  
+Stokes's theorem relates curl to circulation along a boundary.  
+Green's identities provide integral relations for harmonic functions.
+
+\subsection{Inner and Outer Products}
+The dot product measures alignment; the cross product encodes area and orientation.
+
+\subsection{Potential Theory}
+Laplace’s equation $\nabla^2 \phi = 0$ governs harmonic functions.  
+Fundamental solutions and Green’s functions are tools to construct solutions.
+
+\subsection{Numerical Analysis Essentials}
+Error, stability, and convergence define the quality of algorithms.  
+Interpolation and quadrature enable discrete approximations of continuous functions.  
+Computational complexity determines feasibility of large‐scale simulations.
+
+% ======================================================
+\section{Fluid Dynamics Foundations}
+
+\subsection{Vorticity and Velocity Formulations}
+The vorticity field $\boldsymbol{\omega} = \nabla \times \mathbf{u}$ captures local rotation.  
+
+\subsection{Biot--Savart Law}
+Velocity induced by a vortex filament can be written as
+\[
+\mathbf{u}(\mathbf{x}) = \frac{\Gamma}{4 \pi} \int \frac{\mathrm{d}\boldsymbol{\ell} \times (\mathbf{x}-\mathbf{x}')}{\|\mathbf{x}-\mathbf{x}'\|^3}.
+\]
+
+\subsection{Vortex Particle Method}
+Vorticity is discretized into particles with circulation strength.  
+Particles advect with the flow and interact via smoothing kernels.
+
+% ======================================================
+\section{Fast Multipole Method (FMM)}
+
+\subsection{Motivation: Reducing Complexity}
+Naive $O(N^2)$ interactions become $O(N)$ or $O(N \log N)$ with FMM.
+
+\subsection{Multipole Expansions}
+Laplace and Helmholtz kernels admit far‐field expansions, reducing interaction cost.
+
+\subsection{Hierarchical Tree Structures}
+Quadtrees (2D) and octrees (3D) partition space into boxes, grouping particles adaptively.
+
+\subsection{Translation Operators}
+\begin{itemize}
+  \item M2M: Multipole to Multipole
+  \item M2L: Multipole to Local
+  \item L2L: Local to Local
+\end{itemize}
+
+\subsection{Complexity Analysis and Error Control}
+FMM balances speed with controllable approximation error.
+
+% ======================================================
+\section{FMM for the Vortex Particle Method}
+
+\subsection{Coupling Biot--Savart with FMM}
+FMM accelerates evaluation of induced velocities from vortex particles.
+
+\subsection{Near‐field vs. Far‐field}
+Direct summation is used for nearby particles; multipole expansions handle distant ones.
+
+\subsection{Adaptive Trees}
+Nonuniform particle distributions require adaptive octrees for efficiency.
+
+\subsection{Accuracy and Kernel Regularization}
+Regularized kernels prevent singular behavior in particle interactions.
+
+% ======================================================
+\section{Neural Network Surrogates}
+
+\subsection{Problem Framing}
+Inputs: relative position and circulation.  
+Outputs: induced velocity vectors.
+
+\subsection{Network Architectures}
+Explored options include multilayer perceptrons (MLPs), graph neural networks (GNNs), and equivariant neural networks that respect rotational symmetry.
+
+\subsection{Training Data}
+Ground truth is generated from Biot--Savart computations.  
+Supervised learning minimizes prediction error relative to true velocities.
+
+\subsection{Deployment Strategies}
+Neural surrogates replace kernel evaluations in FMM.  
+Hybrid methods combine classical and neural approaches.  
+Physical constraints are enforced to preserve conservation laws.
+
+% ======================================================
+\section{Advanced Topics and Implementation}
+
+\subsection{Error Control and Stability}
+Numerical stability is essential in long‐time vortex simulations.
+
+\subsection{Parallelization and GPU Acceleration}
+Tree traversal and kernel evaluation map well to GPU architectures.
+
+\subsection{Real‐Time Solver Design}
+Combining FMM and neural surrogates enables real‐time vortex simulations.
+
+\subsection{Case Studies}
+Applications include vortex rings, wakes, and jet flows.
+
+% ======================================================
+\section{References and Resources}
+
+% \nocite{*}
+% \bibliographystyle{new-aiaa}
+% \bibliography{references}
+
+\end{document}
